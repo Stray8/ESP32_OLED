@@ -69,6 +69,9 @@ void print_LocalTime()
         case 5:
             display.drawString(95, 0, "Friday");
             break;
+        case 6:
+            display.drawString(95, 0, "Saturday");
+            break;
     }
 }
 
@@ -102,10 +105,14 @@ void loop()
 {    
     delay(1000);
     display.clear();
-    http.begin("http://www.weather.com.cn/data/cityinfo/101270101.html");
+    http.begin("https://api.seniverse.com/v3/weather/now.json?key=SYOcALCe0PNOZEkWb&location=hangzhou&language=en&unit=c"); 
+    //("http://www.weather.com.cn/data/cityinfo/101270101.html");
     int httpCode = http.GET();
     if(httpCode == HTTP_CODE_OK)
-    {
+    { 
+        String payload = http.getString();
+        Serial.println(payload);
+        /*
         print_LocalTime();  
         String pageData = http.getString();
         //Serial.println(pageData);
@@ -118,20 +125,21 @@ void loop()
         String temp1 = obj1["temp1"];
         String temp2 = obj1["temp2"];
         String weather = obj1["weather"];
-        String cityInfo ="地点："+ city;
-        String tempInfo =" 温度: " + temp1 + "~" + temp2;
-        String cityWeatherinfo = " 天气状况: " + weather;
-        Serial.println("获得天气情况如下：");
+        String cityInfo ="place:"+ city;
+        String tempInfo ="temp: " + temp1 + "~" + temp2;
+        String cityWeatherinfo = "weather: " + weather;
+        Serial.println("get weather situation");
     
         Serial.println(cityInfo.c_str());
         display.drawString(0, 10, "Owner: xdz");
         display.drawString(0, 20, "Weather Situation:");
-        display.drawString(0, 30, "Place:" + cityInfo);
+        display.drawString(0, 30, "Place:" + city);
         display.drawString(0, 40, "Temp:" + temp1 + "~" + temp2 + "℃");
         display.drawString(0, 50, "Weather:" + weather);
         
         Serial.println(tempInfo.c_str());
         Serial.println(cityWeatherinfo.c_str());
+        */
     }
     else
     {
